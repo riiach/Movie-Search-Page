@@ -17,7 +17,7 @@ Through building this app, I learned how to fetch external API data, manage sear
 
 ## Preview
 
-![Movie Search App Preview](./my-first-reaact-app/public/Movie%20Search%20Main.png)  
+![Movie Search App Preview](my-first-reaact-app/public/movie-search-preview.png)  
 
 ---
 
