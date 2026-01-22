@@ -10,8 +10,7 @@ Through building this app, I learned how to fetch external API data, manage sear
 
 ## Live Website
 
-🔗 https://your-live-site-link.com  
-*(Replace with your deployed URL)*
+🔗 https://honeydew-pigeon-971328.hostingersite.com/
 
 ---
 
