@@ -1,209 +1,74 @@
-# Movie Search App 🎬
+# Movie Search
 
-A movie search web app built with **React + Vite**, powered by the **TMDB API**.  
-Users can search through thousands of movies, view key details, and track trending searches using **Appwrite**.
+**Find your next opening night.** A cinema-inspired movie discovery app built with React and Vite, with movie data from TMDB and optional search tracking through Appwrite.
 
-This project is originally inspired by a tutorial from **JavaScript Mastery (YouTube)**.  
-Through building this app, I learned how to fetch external API data, manage search state efficiently, and optimize search-related interactions.
-
----
-
-## Live Website
-
-🔗 https://ria-movie-search.vercel.app/
-
----
+[Explore the live website](https://ria-movie-search.vercel.app/)
 
 ## Preview
 
-![Movie Search App Preview](my-first-reaact-app/public/movie-search-preview.png)  
+![Movie Search: a warm cinema screen framed by layered red velvet seats](my-first-reaact-app/public/movie-search-preview.png)
 
----
+## Design
 
-## Features
+The auditorium-inspired hero pairs a softly lit screen with a separate transparent red-seat foreground. The banner copy and search field remain selectable, accessible HTML. A charcoal and burgundy palette continues through the movie collection, with responsive layouts for desktop and mobile.
 
-- 🔍 Search movies from the TMDB database
-- 🎞️ Display movie details:
-  - Poster image
-  - Title
-  - Rating
-  - Original language
-  - Release year
-- ⭐ Track popular search terms using Appwrite
-- 🧠 Optimized search behavior with controlled inputs
-- 🖼️ Graceful fallbacks for missing poster, rating, or release date
+- Search TMDB movies by title.
+- Browse popular movies and see posters, ratings, languages, and release years.
+- Use keyboard-accessible search and navigation.
+- Track search popularity when Appwrite is configured; tracking errors do not block movie results.
+- Handle empty search results and missing movie metadata.
 
----
-
-## Tech Stack
-
-- **React**
-- **Vite**
-- **TMDB API**
-- **Appwrite (Cloud Database)**
-- **ESLint**
-
----
-
-## Components Overview
-
-### `Search`
-- Controlled input component
-- Updates `searchTerm` state as the user types
-- Triggers search logic from the parent component
-
-### `MovieCard`
-- Displays individual movie data
-- Shows:
-  - poster image (with fallback)
-  - movie title
-  - vote average (formatted to 1 decimal)
-  - original language
-  - release year
-
-### `updateSearchCount`
-- Stores search popularity using Appwrite
-- Logic:
-  1. Check if the search term already exists
-  2. If it exists → increment count
-  3. If not → create a new document with movie metadata
-
----
-
-## Appwrite Integration
-
-This project uses **Appwrite Database** to store trending searches.
-
-Each document contains:
-- `searchTerm` – searched keyword
-- `count` – number of times searched
-- `movie_id` – TMDB movie ID
-- `poster_url` – movie poster image URL
-
-Search count logic:
-- Uses `Query.equal()` to find an existing search term
-- Updates the document if found
-- Creates a new document if not found
-
----
-
-## TMDB Image Handling
-
-Movie posters are loaded using TMDB’s image CDN:
-
-- If `poster_path` exists:
-```
-
-[https://image.tmdb.org/t/p/w500/{poster_path}](https://image.tmdb.org/t/p/w500/{poster_path})
-
-````
-- If not:
-- A local fallback image (`/no-movie.png`) is displayed
-
----
-
-## Environment Variables
-
-Create a `.env` file in the project root and add:
-
-```env
-VITE_APPWRITE_PROJECT_ID=your_project_id
-VITE_APPWRITE_DATABASE_ID=your_database_id
-VITE_APPWRITE_TABLE_ID=your_table_id
-VITE_TMDB_API_KEY=your_tmdb_api_key
-````
-
-⚠️ Make sure `.env` is included in `.gitignore`.
-
----
-
-## Installation & Setup
-
-### Clone the repository
+## Run locally
 
 ```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
-```
-
-### Install dependencies
-
-```bash
+git clone https://github.com/riiach/Movie-Search-Page.git
+cd Movie-Search-Page/my-first-reaact-app
 npm install
 ```
 
-### Run the development server
+Create `.env.local` in `my-first-reaact-app`:
+
+```env
+VITE_TMDB_API_KEY=your_tmdb_read_access_token
+# Optional: enable search popularity tracking
+VITE_APPWRITE_ENDPOINT=https://your-region.cloud.appwrite.io/v1
+VITE_APPWRITE_PROJECT_ID=your_project_id
+VITE_APPWRITE_DATABASE_ID=your_database_id
+VITE_APPWRITE_TABLE_ID=your_table_id
+```
+
+Use a TMDB API read access token (Bearer token). Keep local environment files out of git. Vite variables are included in the browser bundle; never put an Appwrite secret API key in them.
 
 ```bash
-npm run dev
+npm run dev      # Development server
+npm run build    # Production build
+npm run preview  # Preview production build
+npm run lint     # ESLint
 ```
 
----
+## Appwrite setup
 
-## Available Scripts
+Optional search tracking uses TablesDB and the browser client. Configure the table permissions for your intended client access and add these columns:
 
-```bash
-npm run dev       # Start development server
-npm run build     # Build for production
-npm run preview   # Preview production build
-npm run lint      # Run ESLint
-```
+| Column | Type | Purpose |
+| --- | --- | --- |
+| `searchTerm` | String | Normalized movie search term; use a unique index |
+| `count` | Integer | Search count |
+| `movie_id` | Integer | First matching TMDB movie ID |
+| `poster_url` | String, nullable | Movie poster URL |
 
----
+## Project structure
 
-## Dependencies
+The Vite application lives in `my-first-reaact-app/`.
 
-```json
-{
-  "react": "^19.1.1",
-  "react-dom": "^19.1.1"
-}
-```
-
-### Dev Dependencies
-
-```json
-{
-  "@vitejs/plugin-react": "^5.0.4",
-  "vite": "npm:rolldown-vite@7.1.14",
-  "eslint": "^9.36.0",
-  "eslint-plugin-react-hooks": "^5.2.0",
-  "eslint-plugin-react-refresh": "^0.4.22"
-}
-```
-
----
-
-## What I Learned
-
-* Fetching and rendering API data in React
-* Structuring reusable components
-* Managing controlled inputs for search
-* Optimizing search behavior
-* Using Appwrite as a backend service
-* Handling missing or partial API data gracefully
-
----
+- `src/App.jsx` — cinema hero and movie collection
+- `src/index.css` — responsive auditorium design
+- `src/components/Search.jsx` — controlled, labelled search field
+- `src/components/MovieCard.jsx` — movie poster and metadata
+- `src/appwrite.js` — optional search-count integration
+- `public/cinema-seats.png` — transparent cinema foreground
+- `public/movie-search-preview.png` — browser capture of the current design
 
 ## Credits
 
-* Original tutorial inspiration: **JavaScript Mastery (YouTube)**
-* Movie data provided by: **TMDB API**
-* Backend service: **Appwrite**
-
----
-
-## License
-
-This project is built for learning and portfolio purposes.
-Please review TMDB and Appwrite terms before commercial use.
-
----
-
-## 👤 Author
-
-**Ria Choi**
-💼 www.linkedin.com/in/ria-choi-76a658309
-📧 riiachoii@gmail.com
-
-If you like this project, consider ⭐ starring the repo!
+Created by **Ria Choi**. Originally inspired by the JavaScript Mastery movie app tutorial, with a custom cinema design. Movie data and posters are provided by TMDB. This project is not endorsed or certified by TMDB. Optional search tracking uses Appwrite. The seat foreground was created with AI using the supplied cinema photograph as a reference.
