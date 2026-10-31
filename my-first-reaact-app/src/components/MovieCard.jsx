@@ -9,13 +9,13 @@ const MovieCard = ({
         src={
           poster_path
             ? `https://image.tmdb.org/t/p/w500/${poster_path}`
-            : "/noMovie.png"
+            : "/noMovieWide.png"
         }
         alt={title}
         loading="lazy"
         onError={(event) => {
           event.currentTarget.onerror = null;
-          event.currentTarget.src = "/noMovie.png";
+          event.currentTarget.src = "/noMovieWide.png";
         }}
       />
 
