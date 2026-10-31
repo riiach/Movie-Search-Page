@@ -1,39 +1,53 @@
-import { Client, Databases, Query, ID } from 'appwrite';
+import { Client, TablesDB, Query, ID } from 'appwrite';
 
 const PROJECT_ID = import.meta.env.VITE_APPWRITE_PROJECT_ID;
 const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 const TABLE_ID = import.meta.env.VITE_APPWRITE_TABLE_ID;
+const ENDPOINT = import.meta.env.VITE_APPWRITE_ENDPOINT;
 
-const client = new Client()
-    .setEndpoint('https://cloud.appwrite.io/v1')
-    .setProject(PROJECT_ID);
-
-const database = new Databases(client);
+const database = PROJECT_ID && DATABASE_ID && TABLE_ID && ENDPOINT
+    ? new TablesDB(new Client().setEndpoint(ENDPOINT).setProject(PROJECT_ID))
+    : null;
 
 export const updateSearchCount = async (searchTerm, movie) => {
-    try {
-        // 1. Check if the search term exists
-        const result = await database.listDocuments(DATABASE_ID, TABLE_ID, [
-            Query.equal('searchTerm', searchTerm),
-        ]);
+    const term = searchTerm.trim().toLowerCase();
+    if (!database || !term || term.length > 255 || !movie?.id) return;
 
-        // 2. If it does, update the count
-        if (result.documents.length > 0) {
-            const doc = result.documents[0];
-            await database.updateDocument(DATABASE_ID, TABLE_ID, doc.$id, {
-                count: doc.count + 1,
-            });
+    const params = { databaseId: DATABASE_ID, tableId: TABLE_ID };
+    const increment = (rowId) => database.incrementRowColumn({
+        ...params, rowId, column: 'count', value: 1,
+    });
+
+    try {
+        const queries = [Query.equal('searchTerm', term), Query.limit(1)];
+        const result = await database.listRows({ ...params, queries });
+        if (result.rows.length) {
+            await increment(result.rows[0].$id);
+            return;
         }
-        // 3. Otherwise, create a new document
-        else {
-            await database.createDocument(DATABASE_ID, TABLE_ID, ID.unique(), {
-                searchTerm,
-                count: 1,
-                movie_id: movie.id,
-                poster_url: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+
+        try {
+            await database.createRow({
+                ...params,
+                rowId: ID.unique(),
+                data: {
+                    searchTerm: term,
+                    count: 1,
+                    movie_id: movie.id,
+                    poster_url: movie.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                        : null,
+                },
             });
+        } catch (error) {
+            // A simultaneous search may have created this unique term first.
+            if (error.code !== 409) throw error;
+            const existing = await database.listRows({ ...params, queries });
+            if (!existing.rows.length) throw error;
+            await increment(existing.rows[0].$id);
         }
     } catch (error) {
+        // Tracking must never prevent movie results from being displayed.
         console.error('Error updating search count:', error);
     }
 };
