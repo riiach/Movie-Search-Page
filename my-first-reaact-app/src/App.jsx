@@ -67,11 +67,11 @@ const App = () => {
       <section className="cinema-hero" aria-labelledby="hero-title">
         <nav className="navigation" aria-label="Main navigation">
           <a className="wordmark" href="#">
-            MOVIE<span>SEARCH</span>
+            <b>MOVIE</b><span>SEARCH</span>
             <i />
           </a>
           <a className="nav-link" href="#movies">
-            Explore movies <span aria-hidden="true">↗</span>
+            Explore movies <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg></span>
           </a>
         </nav>
         <header className="cinema-screen">
@@ -98,7 +98,7 @@ const App = () => {
         />
         <div className="hero-bottom">
           <a href="#movies" aria-label="Browse movies">
-            ↓
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 5v14m-5-5 5 5 5-5" /></svg>
           </a>
         </div>
       </section>
@@ -138,7 +138,7 @@ const App = () => {
       </section>
       <footer>
         <a className="wordmark" href="#">
-          MOVIE<span>SEARCH</span>
+          <b>MOVIE</b><span>SEARCH</span>
           <i />
         </a>
         <span>Movie data by TMDB</span>
