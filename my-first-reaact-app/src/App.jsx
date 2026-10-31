@@ -71,13 +71,12 @@ const App = () => {
             <i />
           </a>
           <a className="nav-link" href="#movies">
-            Explore movies <span>↗</span>
+            Explore movies <span aria-hidden="true">↗</span>
           </a>
         </nav>
         <header className="cinema-screen">
-          <p className="eyebrow">
-            <span /> A LITTLE DISCOVERY. A GREAT MOVIE.
-          </p>
+          <img className="screen-lighting" src="/cinema-screen.png" alt="" aria-hidden="true" />
+          <div className="screen-content">
           <h1 id="hero-title">
             Find your next
             <br />
@@ -89,9 +88,7 @@ const App = () => {
             Discover something worth settling in for.
           </p>
           <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-          <p className="screen-caption">
-            THOUSANDS OF STORIES. ONE PERFECT PICK.
-          </p>
+          </div>
         </header>
         <img
           className="cinema-seats"
@@ -100,11 +97,9 @@ const App = () => {
           aria-hidden="true"
         />
         <div className="hero-bottom">
-          <span>TAKE A SEAT. FIND YOUR STORY.</span>
           <a href="#movies" aria-label="Browse movies">
             ↓
           </a>
-          <span>THE SEARCH IS PART OF THE MAGIC.</span>
         </div>
       </section>
       <section
@@ -114,7 +109,6 @@ const App = () => {
       >
         <div className="section-heading">
           <div>
-            <p className="eyebrow">THE COLLECTION</p>
             <h2 id="movies-title">
               {searchTerm ? "Your search, on screen." : "Worth a closer look."}
             </h2>
@@ -147,7 +141,6 @@ const App = () => {
           MOVIE<span>SEARCH</span>
           <i />
         </a>
-        <p>A good night starts with a great story.</p>
         <span>Movie data by TMDB</span>
       </footer>
     </main>

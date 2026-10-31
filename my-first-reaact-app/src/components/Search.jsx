@@ -9,7 +9,7 @@ const Search = ({ searchTerm, setSearchTerm }) => {
         <input
           type="search"
           aria-label="Search movies"
-          placeholder="What are you in the mood for?"
+          placeholder="Search through thousands of movies"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />

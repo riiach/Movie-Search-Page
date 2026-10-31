@@ -10,7 +10,7 @@
 
 ## Design
 
-The auditorium-inspired hero pairs a softly lit screen with a separate transparent red-seat foreground. The banner copy and search field remain selectable, accessible HTML. A charcoal and burgundy palette continues through the movie collection, with responsive layouts for desktop and mobile.
+The auditorium-inspired hero layers a rectangular screen, a photographic screen-and-beam overlay, and a separate transparent red-seat foreground. The banner copy and search field remain selectable, accessible HTML. A charcoal and burgundy palette continues through the movie collection, with responsive layouts for desktop and mobile.
 
 - Search TMDB movies by title.
 - Browse popular movies and see posters, ratings, languages, and release years.
@@ -67,6 +67,7 @@ The Vite application lives in `my-first-reaact-app/`.
 - `src/components/MovieCard.jsx` — movie poster and metadata
 - `src/appwrite.js` — optional search-count integration
 - `public/cinema-seats.png` — transparent cinema foreground
+- `public/cinema-screen.png` — isolated photographic screen and light beams
 - `public/movie-search-preview.png` — browser capture of the current design
 
 ## Credits
