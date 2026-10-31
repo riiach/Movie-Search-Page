@@ -10,7 +10,7 @@ Through building this app, I learned how to fetch external API data, manage sear
 
 ## Live Website
 
-🔗 https://honeydew-pigeon-971328.hostingersite.com/
+🔗 https://ria-movie-search.vercel.app/
 
 ---
 
