@@ -87,7 +87,7 @@ const App = () => {
             <br />
             Discover something worth settling in for.
           </p>
-          <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} isLoading={isLoading} />
           </div>
         </header>
         <img

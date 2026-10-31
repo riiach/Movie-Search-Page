@@ -499,3 +499,7 @@ h1 em {
   -webkit-text-fill-color: transparent;
   text-shadow: none;
 }
+
+.search input { padding-right: 36px; }
+.search-loading { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+.search-loading svg { display: block; width: 20px; height: 20px; color: #f7d9d9; fill: #e66470; }

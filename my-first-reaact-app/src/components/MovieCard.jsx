@@ -13,6 +13,10 @@ const MovieCard = ({
         }
         alt={title}
         loading="lazy"
+        onError={(event) => {
+          event.currentTarget.onerror = null;
+          event.currentTarget.src = "/noMovie.png";
+        }}
       />
 
       <div className="mt-4">
